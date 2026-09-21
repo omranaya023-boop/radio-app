@@ -7,30 +7,54 @@ body {
   padding-bottom: 100px;
 }
 
-/* Header */
 header {
   display: flex; justify-content: space-between; align-items: center;
   padding: 1.5rem 6%;
-  background: rgba(5, 10, 21, 0.7);
-  backdrop-filter: blur(10px);
+  background: rgba(5, 10, 21, 0.75);
+  backdrop-filter: blur(12px);
   position: sticky; top: 0; z-index: 10;
   border-bottom: 1px solid rgba(0,168,255,0.15);
 }
-.logo { font-size: 1.5rem; font-weight: 800; color: #00a8ff; }
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #00a8ff;
+  text-shadow: 0 0 20px rgba(0,168,255,0.6);
+}
 .search-box {
   display: flex; align-items: center; gap: 0.6rem;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(0,168,255,0.3);
   padding: 0.5rem 1rem; border-radius: 50px;
   width: 320px;
+  transition: 0.3s;
 }
+.search-box:focus-within { border-color: #00a8ff; box-shadow: 0 0 15px rgba(0,168,255,0.4); }
 .search-box i { color: #00a8ff; }
 .search-box input {
   background: transparent; border: none; outline: none;
   color: #fff; width: 100%; font-size: 0.95rem;
 }
 
-/* Grid */
+.filters {
+  display: flex; gap: 1rem;
+  padding: 1.5rem 6% 0 6%;
+  flex-wrap: wrap;
+}
+.filters select {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(0,168,255,0.3);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: none;
+  transition: 0.3s;
+}
+.filters select:hover { border-color: #00a8ff; }
+.filters select option { background: #0a1a3a; color: #fff; }
+
 main { padding: 2rem 6%; }
 .status { color: #a0aec0; margin-bottom: 1rem; }
 .grid {
@@ -39,9 +63,8 @@ main { padding: 2rem 6%; }
   gap: 1.2rem;
 }
 
-/* Station card */
 .card {
-  background: rgba(255,255,255,0.03);
+  background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(0,168,255,0.02));
   border: 1px solid rgba(0,168,255,0.2);
   border-radius: 15px;
   padding: 1.2rem;
@@ -52,7 +75,7 @@ main { padding: 2rem 6%; }
 .card:hover {
   transform: translateY(-5px);
   border-color: #00a8ff;
-  box-shadow: 0 0 25px rgba(0,168,255,0.35);
+  box-shadow: 0 0 25px rgba(0,168,255,0.4);
 }
 .card img {
   width: 70px;
@@ -68,7 +91,6 @@ main { padding: 2rem 6%; }
 .card h3 { font-size: 0.95rem; margin-bottom: 0.3rem; color: #fff; }
 .card p { font-size: 0.78rem; color: #a0aec0; }
 
-/* Player */
 .player {
   position: fixed; bottom: 0; left: 0; right: 0;
   display: flex; align-items: center; gap: 1rem;

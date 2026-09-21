@@ -7,28 +7,39 @@ const npName = document.getElementById("np-name");
 const npCountry = document.getElementById("np-country");
 const npImg = document.getElementById("np-img");
 const volume = document.getElementById("volume");
+const filterCountry = document.getElementById("filter-country");
+const filterGenre = document.getElementById("filter-genre");
 
 let currentStation = null;
 let isPlaying = false;
 
-loadStations("");
+loadStations();
 
 let t;
 search.addEventListener("input", () => {
   clearTimeout(t);
-  t = setTimeout(() => loadStations(search.value), 400);
+  t = setTimeout(loadStations, 400);
 });
+filterCountry.addEventListener("change", loadStations);
+filterGenre.addEventListener("change", loadStations);
 
-async function loadStations(query) {
+async function loadStations() {
+  const q = search.value.trim();
+  const country = filterCountry.value;
+  const tag = filterGenre.value;
+
   status.textContent = "Loading...";
   grid.innerHTML = "";
+
+  let url = "/api/stations?";
+  if (q) url += `q=${encodeURIComponent(q)}&`;
+  if (country) url += `country=${encodeURIComponent(country)}&`;
+  if (tag) url += `tag=${encodeURIComponent(tag)}&`;
+  if (!q && !country && !tag) url += "country=France";
+
   try {
-    const url = query
-      ? `/api/stations?q=${encodeURIComponent(query)}`
-      : `/api/stations?country=France`;
     const res = await fetch(url);
     const data = await res.json();
-
     if (!Array.isArray(data) || data.length === 0) {
       status.textContent = "No stations found.";
       return;
@@ -58,33 +69,25 @@ function playStation(s) {
   currentStation = s;
   audio.src = s.url;
   audio.volume = volume.value;
-
-  audio.play()
-    .then(() => {
-      isPlaying = true;
-      playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-      npName.textContent = s.name;
-      npCountry.textContent = s.country || "";
-      npImg.src = s.favicon || "https://via.placeholder.com/50/0a1a3a/00a8ff?text=FM";
-    })
-    .catch(err => {
-      console.log("Play failed:", err, "URL:", s.url);
-      npName.textContent = s.name;
-      npCountry.textContent = "Stream blocked — try another";
-      playBtn.innerHTML = '<i class="fas fa-play"></i>';
-      isPlaying = false;
-    });
+  audio.play().then(() => {
+    isPlaying = true;
+    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    npName.textContent = s.name;
+    npCountry.textContent = s.country || "";
+    npImg.src = s.favicon || "https://via.placeholder.com/50/0a1a3a/00a8ff?text=FM";
+  }).catch(err => {
+    console.log("Play failed:", err, "URL:", s.url);
+    npName.textContent = s.name;
+    npCountry.textContent = "Stream blocked — try another";
+    playBtn.innerHTML = '<i class="fas fa-play"></i>';
+    isPlaying = false;
+  });
 }
 
 playBtn.onclick = () => {
   if (!currentStation) return;
-  if (isPlaying) {
-    audio.pause();
-    playBtn.innerHTML = '<i class="fas fa-play"></i>';
-  } else {
-    audio.play().catch(e => console.log(e));
-    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-  }
+  if (isPlaying) { audio.pause(); playBtn.innerHTML = '<i class="fas fa-play"></i>'; }
+  else { audio.play().catch(e => console.log(e)); playBtn.innerHTML = '<i class="fas fa-pause"></i>'; }
   isPlaying = !isPlaying;
 };
 
