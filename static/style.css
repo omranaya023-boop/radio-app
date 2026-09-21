@@ -1,0 +1,102 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+body {
+  background: radial-gradient(circle at 50% 0%, #0a1a3a 0%, #050a15 70%);
+  color: #fff;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+/* Header */
+header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem 6%;
+  background: rgba(5, 10, 21, 0.7);
+  backdrop-filter: blur(10px);
+  position: sticky; top: 0; z-index: 10;
+  border-bottom: 1px solid rgba(0,168,255,0.15);
+}
+.logo { font-size: 1.5rem; font-weight: 800; color: #00a8ff; }
+.search-box {
+  display: flex; align-items: center; gap: 0.6rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(0,168,255,0.3);
+  padding: 0.5rem 1rem; border-radius: 50px;
+  width: 320px;
+}
+.search-box i { color: #00a8ff; }
+.search-box input {
+  background: transparent; border: none; outline: none;
+  color: #fff; width: 100%; font-size: 0.95rem;
+}
+
+/* Grid */
+main { padding: 2rem 6%; }
+.status { color: #a0aec0; margin-bottom: 1rem; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.2rem;
+}
+
+/* Station card */
+.card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(0,168,255,0.2);
+  border-radius: 15px;
+  padding: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s;
+  text-align: center;
+}
+.card:hover {
+  transform: translateY(-5px);
+  border-color: #00a8ff;
+  box-shadow: 0 0 25px rgba(0,168,255,0.35);
+}
+.card img {
+  width: 70px;
+  height: 70px;
+  display: block;
+  flex-shrink: 0;
+  object-fit: contain;
+  background: rgba(0,168,255,0.1);
+  border-radius: 12px;
+  padding: 8px;
+  margin: 0 auto 0.8rem auto;
+}
+.card h3 { font-size: 0.95rem; margin-bottom: 0.3rem; color: #fff; }
+.card p { font-size: 0.78rem; color: #a0aec0; }
+
+/* Player */
+.player {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 6%;
+  background: rgba(5, 10, 21, 0.95);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid rgba(0,168,255,0.3);
+}
+.player img {
+  width: 50px; height: 50px; border-radius: 10px;
+  background: rgba(0,168,255,0.1); padding: 5px; object-fit: contain;
+  display: block;
+}
+.np-info { flex: 1; }
+#np-name { font-weight: 600; color: #00a8ff; }
+#np-country { font-size: 0.8rem; color: #a0aec0; }
+#play-btn {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: none; cursor: pointer;
+  background: #00a8ff; color: #fff;
+  box-shadow: 0 0 20px rgba(0,168,255,0.5);
+  transition: 0.3s;
+}
+#play-btn:hover { background: #008ecc; }
+#volume { width: 100px; accent-color: #00a8ff; }
+
+@media (max-width: 600px) {
+  .search-box { width: 180px; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  #volume { display: none; }
+}
